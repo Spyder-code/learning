@@ -1,92 +1,119 @@
 <script>
   import { goto } from '@roxi/routify';
 
-  let step = 0;
+  let q = parseInt(Math.random() * (168 - 56) + 56);
   let is_next = false;
+  let no = 1;
+  let i = 1;
+  let n = 2;
+  let op = '<';
 
-  const next_step = ()=>{
-    step++;
+  const sum = ()=> {
+    no = 0;
+    if(op=='>'){
+      for (let j = i; j > n; j++) {
+        no++;
+      }
+    }
+    if(op=='>='){
+      for (let j = i; j >= n; j++) {
+        no++;
+      }
+    }
+    if(op=='<'){
+      for (let j = i; j < n; j++) {
+        no++;
+      }
+    }
+    if(op=='<='){
+      for (let j = i; j <= n; j++) {
+        no++;
+      }
+    }
   }
   const next = ()=>{
     is_next = true;
     setTimeout(() => {
-      $goto('/quiz-loop');
+      $goto('/thanks');
     }, 1000);
   }
   const prev = ()=>{
     is_next = true;
     setTimeout(() => {
-      $goto('/event');
+      $goto('/loop');
     }, 1000);
   }
+  const changeOp = (name) =>{
+    op = name;
+    sum();
+  }
+
   let text = 
-`function washDishes(){
-    prep();
-    wash();
-    rinse();
-    dry();
-}`
-  let text_ = 
-`   for (let i = 0; i < 200; i++) {
-        washDishes();
-    }`
+`   for (let i = ${i}; i ${op} ${n}; i++) {
+        createBox();
+    }`;
+
+$: text = 
+`   for (let i = ${i}; i ${op} ${n}; i++) {
+        createBox();
+    }`;
 </script>
 
 <div class="container-fluid animate__animated animate__bounceInLeft {is_next?'animate__animated animate__bounceOut':''}">
   <div class="card">
-    <span class="card-title">What is  Loop?</span>
+    <span class="card-title">Quiz</span>
     <div class="flex-row">
       <div class="w-15">
-        <p>Let's go think about a task where you have to do the same thing multiple times</p>
+        <p>Let's go create {q} box with loop</p>
+        <div class="input">
+          <label>Variable i:</label>
+          <input type="number" bind:value={i} min="0" on:change={sum} on:keyup={sum}>
+        </div>
+        <div class="input">
+          <label>Operation:</label>
+          <div class="flex-row">
+            <button class="op" on:click={()=>changeOp('>')}>{'>'}</button>
+            <button class="op" on:click={()=>changeOp('>=')}>{'>='}</button>
+            <button class="op" on:click={()=>changeOp('<')}>{'<'}</button>
+            <button class="op" on:click={()=>changeOp('<=')}>{'<='}</button>
+          </div>
+        </div>
+        <div class="input">
+          <label>Variable n:</label>
+          <input type="number" bind:value={n} min="0" on:change={sum} on:keyup={sum}>
+        </div>
       </div>
       <div class="w-85">
-        <div class="card-box" on:click={next_step}>
-          <div class="flex-row">
-            <div class="w-60">
-              {#if step>=1}
-                <img class="cuci animate__animated animate__bounceInLeft" src="/cuci.png" alt="">
-              {/if}
-              {#if step>=2}
-                <pre class="animate__animated animate__bounceInLeft">{text}</pre>
-              {/if}
-            </div>
-            <div class="w-40">
-              {#if step>=3}
-              <div class="animate__animated animate__bounceInLeft">
-                <h3>One Plate:</h3>
-                <pre>  washDishes();</pre>
-              </div>
-              {/if}
-              {#if step>=4}
-                <div class="animate__animated animate__bounceInLeft">
-                  <h3>Two Plates:</h3>
-                  <pre>  washDishes();</pre>
-                  <pre>  washDishes();</pre>
-                </div>
-              {/if}
-              {#if step>=5}
-                <div class="animate__animated animate__bounceInLeft">
-                  <h3>Two hundred plate?</h3>
-                </div>
-              {/if}
-              {#if step>=6}
-                <div class="animate__animated animate__bounceInLeft">
-                  <pre>{text_}</pre>
-                </div>
-              {/if}
-            </div>
-          </div>
-          <!-- <div class="flex-row wrap">
-            {#each Array(100) as item,idx}
-              <div class="box animate__animated animate__bounceInLeft">{idx}</div>
+        <div class="card-box">
+          <div class="flex-row wrap">
+            {#each Array(no) as item,idx}
+              <div class="box animate__animated animate__bounceInLeft">{idx+1}</div>
             {/each}
-          </div> -->
+          </div>
+          <hr>
+          <div class="flex-row">
+            <div class="w-50">
+              <pre>{text}</pre>
+            </div>
+            {#if no==q}
+              <div class="w-50">
+                <span>Why using loop?</span>
+                <oll>
+                  <li>Make your code shorter</li>
+                  <li>Easier to debug</li>
+                  <li>Save your time</li>
+                </oll>
+              </div>
+            {/if}
+          </div>
         </div>
       </div>
     </div>
+    {#if no==q}
     <button on:click={next} class="icon right animate__animated animate__bounce">
       <span class="mdi mdi-arrow-right-bold-circle-outline"></span>
     </button>
+    {/if}
     <button on:click={prev} class="icon left animate__animated animate__bounce">
       <span class="mdi mdi-arrow-left-bold-circle-outline"></span>
     </button>
@@ -94,6 +121,18 @@
 </div>
 
 <style>
+  button.op{
+    width: 50px;
+    padding: 7px 0px;
+  }
+  .input{
+    margin: 15px 0px;
+  }
+  input{
+    text-align: center;
+    padding: 5px 10px;
+    outline: none;
+  }
   pre{
     font-size: 15pt;
   }
@@ -171,8 +210,8 @@
   .w-15{
     width: 15%;
   }
-  .w-30{
-    width: 30%;
+  .w-50{
+    width: 50%;
   }
   .w-40{
     width: 40%;

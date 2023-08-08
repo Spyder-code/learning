@@ -65,6 +65,38 @@ export default {
       "children": []
     },
     {
+      "meta": {},
+      "id": "_default_quiz_loop_svelte",
+      "_regex": {},
+      "_paramKeys": {},
+      "name": "quiz-loop",
+      "file": {
+        "path": "src/routes/quiz-loop.svelte",
+        "dir": "src/routes",
+        "base": "quiz-loop.svelte",
+        "ext": ".svelte",
+        "name": "quiz-loop"
+      },
+      "asyncModule": () => import('../src/routes/quiz-loop.svelte'),
+      "children": []
+    },
+    {
+      "meta": {},
+      "id": "_default_thanks_svelte",
+      "_regex": {},
+      "_paramKeys": {},
+      "name": "thanks",
+      "file": {
+        "path": "src/routes/thanks.svelte",
+        "dir": "src/routes",
+        "base": "thanks.svelte",
+        "ext": ".svelte",
+        "name": "thanks"
+      },
+      "asyncModule": () => import('../src/routes/thanks.svelte'),
+      "children": []
+    },
+    {
       "meta": {
         "dynamic": true,
         "dynamicSpread": true

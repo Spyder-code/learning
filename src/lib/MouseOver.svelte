@@ -1,8 +1,14 @@
 <script>
+  let title = '';
   let text = '';
   const overElement = (name)=>{
-    text = name;
+    title = name;
   }
+
+  $:text = 
+`funtion mouseOver(){
+  element.innerHTML = 'The mouse over an ${title} box';
+}`;
 </script>
 <div class="card-box animate__animated animate__bounceIn">
   <div class="flex-row">
@@ -17,9 +23,9 @@
     </div>
   </div>
   <hr>
-  <p>The mouse over an <span>{text}</span> box</p>
+  <p>The mouse over an <span>{title}</span> box</p>
+  <pre>{text}</pre>
 </div>
-<p>The user moves the mouse over an HTML element</p>
 
 <style>
   span{

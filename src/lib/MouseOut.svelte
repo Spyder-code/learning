@@ -1,11 +1,20 @@
 <script>
+  let title = '';
   let text = '';
   const overElement = (name)=>{
-    text = name;
+    title = name;
+    text = 
+`funtion mouseOver(){
+  element.innerHTML = 'The mouse over an ${title} box';
+}`;
   }
 
   const outElement = ()=>{
-    text = false;
+    title = '';
+    text = 
+`funtion mouseOut(){
+  element.innerHTML = 'The mouse out of box';
+}`;
   }
 </script>
 <div class="card-box animate__animated animate__bounceIn">
@@ -21,11 +30,14 @@
     </div>
   </div>
   <hr>
-  {#if text}
-    <p>The mouse over an <span>{text}</span> box</p>
+  {#if title}
+    <p>The mouse over an <span>{title}</span> box</p>
+    <pre>{text}</pre>
+  {:else}
+    <p>The mouse out of box</p>
+    <pre>{text}</pre>
   {/if}
 </div>
-<p>The user moves the mouse over an HTML element</p>
 
 <style>
   span{

@@ -5,4 +5,7 @@ import routify from '@roxi/routify/vite-plugin'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [svelte(), routify()],
+  server: {
+    host: true
+  }
 })

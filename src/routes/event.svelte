@@ -1,12 +1,13 @@
 <script>
   import Change from "../lib/Change.svelte";
   import Click from "../lib/Click.svelte";
+  import Guide from "../lib/Guide.svelte";
   import MouseOut from "../lib/MouseOut.svelte";
   import MouseOver from "../lib/MouseOver.svelte";
   import { goto } from '@roxi/routify';
 
   let is_next = false;
-  let tab = 'onchange';
+  let tab = 'guide';
   const next = ()=>{
     is_next = true;
     setTimeout(() => {
@@ -21,10 +22,14 @@
 
 <div class="container-fluid animate__animated animate__bounceInLeft {is_next?'animate__animated animate__bounceOut':''}">
   <div class="card">
-    <span class="card-title">What is  Event?</span>
+    <span class="card-title">Event</span>
     <div class="flex-row">
       <div class="w-15">
         <div class="flex">
+          <button on:click={()=>changeTab('guide')} class="box {tab=='guide'?'active':''}">
+            <i>Guide</i>
+          </button>
+          <span class="sub">EXAMPLE</span>
           <button on:click={()=>changeTab('onchange')} class="box {tab=='onchange'?'active':''}">
             <i>onchange</i>
           </button>
@@ -40,6 +45,9 @@
         </div>
       </div>
       <div class="w-85">
+        {#if tab=='guide'}
+          <Guide/>
+        {/if}
         {#if tab=='onchange'}
           <Change/>
         {/if}
@@ -141,5 +149,9 @@
   }
   .w-70{
     width: 70%;
+  }
+  span.sub{
+    margin: 10px 0px;
+    border-bottom: 1px solid white;
   }
 </style>

@@ -13,7 +13,7 @@
 
 
 <div class="container">
-  <div class="card {is_play?'animate__animated animate__bounceOut':''}">
+  <div class="card animate__animated animate__bounceInLeft {is_play?'animate__animated animate__bounceOut':''}">
     <span class="card-title">Lesson 1</span>
     <h1>EVENT AND LOOP IN CODING</h1>
     <button on:click={next} class="icon animate__animated animate__bounce">
